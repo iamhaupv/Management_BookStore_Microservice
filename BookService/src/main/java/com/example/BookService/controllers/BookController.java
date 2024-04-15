@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -35,8 +36,15 @@ public class BookController {
 		service.deleteBookById(id);
 		return "delete book successfully!";
 	}
+	// get book by id
 	@GetMapping("/book/{id}")
 	public Book getBookById(@PathVariable Integer id) {
 		return service.getBookById(id);
 	}
+	// update book by id
+	@PatchMapping("/book/{id}")
+	public Book updateBook(@PathVariable Integer id, @RequestBody  Book book) {
+		return service.updateBook(id, book);
+	}
+	
 }
