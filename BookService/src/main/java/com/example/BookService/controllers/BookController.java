@@ -35,4 +35,8 @@ public class BookController {
 		service.deleteBookById(id);
 		return "delete book successfully!";
 	}
+	@GetMapping("/book/{id}")
+	public Book getBookById(@PathVariable Integer id) {
+		return service.getBookById(id);
+	}
 }
