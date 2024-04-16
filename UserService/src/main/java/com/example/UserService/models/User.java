@@ -1,33 +1,41 @@
 package com.example.UserService.models;
 
-import java.io.Serializable;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "users")
-public class User implements Serializable{
+public class User extends BaseEntity{
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
 	private String username;
 	private String password;
+	@OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+	@JoinTable(name = "t_user_rolF", joinColumns = {@JoinColumn(name = "user_id")},
+	            inverseJoinColumns = {@JoinColumn(name = "role_id")})
+	private Set<Role> roles = new HashSet<>();
 	public User() {
 		// TODO Auto-generated constructor stub
 	}
-	public int getId() {
-		return id;
+	@Override
+	public String toString() {
+		return "User [username=" + username + ", password=" + password + "]";
 	}
-	public void setId(int id) {
-		this.id = id;
+	public User(String username, String password) {
+		super();
+		this.username = username;
+		this.password = password;
 	}
 	public String getUsername() {
 		return username;
@@ -41,14 +49,5 @@ public class User implements Serializable{
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public User(int id, String username, String password) {
-		super();
-		this.id = id;
-		this.username = username;
-		this.password = password;
-	}
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", username=" + username + ", password=" + password + "]";
-	}
+	
 }
