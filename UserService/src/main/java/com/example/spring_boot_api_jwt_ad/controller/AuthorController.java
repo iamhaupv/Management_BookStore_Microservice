@@ -16,7 +16,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-public class UserController {
+@RequestMapping("/api/v2/")
+public class AuthorController {
 
     @Autowired
     private UserService userService;
