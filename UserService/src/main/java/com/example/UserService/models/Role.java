@@ -49,4 +49,11 @@ public class Role extends BaseEntity{
 	public void setRoleName(String roleName) {
 		this.roleName = roleName;
 	}
+	public Set<Permission> getPermissions() {
+		return permissions;
+	}
+	public void setPermissions(Set<Permission> permissions) {
+		this.permissions = permissions;
+	}
+	
 }

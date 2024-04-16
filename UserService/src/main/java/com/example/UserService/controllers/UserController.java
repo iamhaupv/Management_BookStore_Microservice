@@ -32,17 +32,17 @@ public class UserController {
 	}
 	// get user by id
 	@GetMapping("/{id}")
-	public User getUserById(@PathVariable Integer id) {
+	public User getUserById(@PathVariable Long id) {
 		return service.getUerById(id);
 	}
 	// delete user by id
 	@DeleteMapping("/user/{id}")
-	public String deleteUserById(@PathVariable Integer id) {
+	public String deleteUserById(@PathVariable Long id) {
 		return service.deleteUserById(id);
 	}
 	// update user
 	@PatchMapping("/user/{id}")
-	public User updateUser(@PathVariable Integer id, @RequestBody User user) {
+	public User updateUser(@PathVariable Long id, @RequestBody User user) {
 		return service.updateUser(id, user);
 	}
 }

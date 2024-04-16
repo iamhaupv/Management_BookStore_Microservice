@@ -50,5 +50,17 @@ public class User extends BaseEntity{
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	public User(String username, String password, Set<Role> roles) {
+		super();
+		this.username = username;
+		this.password = password;
+		this.roles = roles;
+	}
+	public Set<Role> getRoles() {
+		return roles;
+	}
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
+	}
 	
 }

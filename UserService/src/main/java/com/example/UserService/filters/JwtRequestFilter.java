@@ -50,8 +50,8 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
 			Set<GrantedAuthority> authorities = new HashSet<>();
 
-			user.getAuthorities().forEach(p -> authorities.add(new SimpleGrantedAuthority((String) p)));
-
+//			user.getAuthorities().forEach(p -> authorities.add(new SimpleGrantedAuthority((String) p)));
+			user.getAuthorities().forEach(authority -> authorities.add(new SimpleGrantedAuthority(authority.getAuthority())));
 			UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(user, null,
 					authorities);
 
