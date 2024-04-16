@@ -46,5 +46,7 @@ public class Token extends BaseEntity{
 		this.token = token;
 		this.tokenExpDate = tokenExpDate;
 	}
-	
+	public Token() {
+		// TODO Auto-generated constructor stub
+	}
 }

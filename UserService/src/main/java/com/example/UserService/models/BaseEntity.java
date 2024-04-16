@@ -29,20 +29,29 @@ public abstract class BaseEntity implements Serializable {
 	private Long id;
 	private String deleted;
 	@CreatedDate
-	private Date createAt;
+	private Date createdAt;
 	@LastModifiedDate
-	private Date updateAt;
+	private Date updatedAt;
 	@CreatedBy
-	private Long createBy;
+	private Long createdBy;
 	@LastModifiedBy
-	private Long updateBy;
+	private Long updatedBy;
 	public BaseEntity() {
 		// TODO Auto-generated constructor stub
 	}
 	@Override
 	public String toString() {
-		return "BaseEntity [id=" + id + ", deleted=" + deleted + ", createAt=" + createAt + ", updateAt=" + updateAt
-				+ ", createBy=" + createBy + ", updateBy=" + updateBy + "]";
+		return "BaseEntity [id=" + id + ", deleted=" + deleted + ", createdAt=" + createdAt + ", updatedAt=" + updatedAt
+				+ ", createdBy=" + createdBy + ", updatedBy=" + updatedBy + "]";
+	}
+	public BaseEntity(Long id, String deleted, Date createdAt, Date updatedAt, Long createdBy, Long updatedBy) {
+		super();
+		this.id = id;
+		this.deleted = deleted;
+		this.createdAt = createdAt;
+		this.updatedAt = updatedAt;
+		this.createdBy = createdBy;
+		this.updatedBy = updatedBy;
 	}
 	public Long getId() {
 		return id;
@@ -56,39 +65,29 @@ public abstract class BaseEntity implements Serializable {
 	public void setDeleted(String deleted) {
 		this.deleted = deleted;
 	}
-	public Date getCreateAt() {
-		return createAt;
+	public Date getCreatedAt() {
+		return createdAt;
 	}
-	public void setCreateAt(Date createAt) {
-		this.createAt = createAt;
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
 	}
-	public Date getUpdateAt() {
-		return updateAt;
+	public Date getUpdatedAt() {
+		return updatedAt;
 	}
-	public void setUpdateAt(Date updateAt) {
-		this.updateAt = updateAt;
+	public void setUpdatedAt(Date updatedAt) {
+		this.updatedAt = updatedAt;
 	}
-	public Long getCreateBy() {
-		return createBy;
+	public Long getCreatedBy() {
+		return createdBy;
 	}
-	public void setCreateBy(Long createBy) {
-		this.createBy = createBy;
+	public void setCreatedBy(Long createdBy) {
+		this.createdBy = createdBy;
 	}
-	public Long getUpdateBy() {
-		return updateBy;
+	public Long getUpdatedBy() {
+		return updatedBy;
 	}
-	public void setUpdateBy(Long updateBy) {
-		this.updateBy = updateBy;
-	}
-	public BaseEntity(Long id, String deleted, Date createAt, Date updateAt, Long createBy, Long updateBy) {
-		super();
-		this.id = id;
-		this.deleted = deleted;
-		this.createAt = createAt;
-		this.updateAt = updateAt;
-		this.createBy = createBy;
-		this.updateBy = updateBy;
+	public void setUpdatedBy(Long updatedBy) {
+		this.updatedBy = updatedBy;
 	}
 	
-
 }
