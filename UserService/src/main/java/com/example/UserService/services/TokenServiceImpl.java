@@ -3,9 +3,8 @@ package com.example.UserService.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.UserService.models.Token;
 import com.example.UserService.repositories.TokenRepository;
-
-import ch.qos.logback.core.subst.Token;
 
 @Service
 public class TokenServiceImpl implements TokenService {

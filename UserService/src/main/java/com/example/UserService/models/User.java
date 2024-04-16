@@ -4,16 +4,17 @@ package com.example.UserService.models;
 import java.util.HashSet;
 import java.util.Set;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
 
 @Entity
-@Table(name = "users")
+@Table(name = "t_user")
 public class User extends BaseEntity{
 	/**
 	 * 
@@ -22,7 +23,7 @@ public class User extends BaseEntity{
 	private String username;
 	private String password;
 	@OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
-	@JoinTable(name = "t_user_rolF", joinColumns = {@JoinColumn(name = "user_id")},
+	@JoinTable(name = "t_user_role", joinColumns = {@JoinColumn(name = "user_id")},
 	            inverseJoinColumns = {@JoinColumn(name = "role_id")})
 	private Set<Role> roles = new HashSet<>();
 	public User() {

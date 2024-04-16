@@ -1,5 +1,9 @@
 package com.example.UserService.filters;
 
+import com.example.UserService.authen.UserPrincipal;
+import com.example.UserService.models.Token;
+import com.example.UserService.services.TokenService;
+import com.example.UserService.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
@@ -20,47 +24,41 @@ import java.util.*;
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {
 
-    @Autowired
-    private JwtUtil jwtUtil;
+	@Autowired
+	private JwtUtil jwtUtil;
 
-    @Autowired
-    private TokenService verificationTokenService;
+	@Autowired
+	private TokenService verificationTokenService;
 
-    @Override
-    protected void doFilterInternal(HttpServletRequest request,
-                                    HttpServletResponse response,
-                                    FilterChain filterChain)
-            throws ServletException, IOException {
+	@Override
+	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+			throws ServletException, IOException {
 
-        final String authorizationHeader
-                = request.getHeader("Authorization");
+		final String authorizationHeader = request.getHeader("Authorization");
 
-        UserPrincipal user = null;
-        Token token = null;
+		UserPrincipal user = null;
+		Token token = null;
 
+		if (StringUtils.hasText(authorizationHeader) && authorizationHeader.startsWith("Token ")) {
+			String jwt = authorizationHeader.substring(6);
 
-        if (StringUtils.hasText(authorizationHeader) &&
-                authorizationHeader.startsWith("Token ")) {
-            String jwt = authorizationHeader.substring(6);
+			user = jwtUtil.getUserFromToken(jwt);
+			token = verificationTokenService.findByToken(jwt);
+		}
 
-            user = jwtUtil.getUserFromToken(jwt);
-            token = verificationTokenService.findByToken(jwt);
-        }
+		if (null != user && null != token && token.getTokenExpDate().after(new Date())) {
 
-        if (null != user && null != token && token.getTokenExpDate().after(new Date())) {
+			Set<GrantedAuthority> authorities = new HashSet<>();
 
-            Set<GrantedAuthority> authorities = new HashSet<>();
+			user.getAuthorities().forEach(p -> authorities.add(new SimpleGrantedAuthority((String) p)));
 
-            user.getAuthorities().forEach(
-                    p -> authorities.add(new SimpleGrantedAuthority((String) p)));
+			UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(user, null,
+					authorities);
 
-            UsernamePasswordAuthenticationToken authentication =
-                    new UsernamePasswordAuthenticationToken(user, null, authorities);
+			authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
-            authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-        }
-        filterChain.doFilter(request, response);
-    }
+			SecurityContextHolder.getContext().setAuthentication(authentication);
+		}
+		filterChain.doFilter(request, response);
+	}
 }

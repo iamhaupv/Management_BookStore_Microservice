@@ -2,13 +2,14 @@ package com.example.UserService.services;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.UserService.models.User;
 import com.example.UserService.repositories.UserRepository;
 
-import jakarta.transaction.Transactional;
 @Service
 @Transactional
 public class UserServiceImpl implements UserService{

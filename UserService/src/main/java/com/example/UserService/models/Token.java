@@ -2,12 +2,13 @@ package com.example.UserService.models;
 
 import java.util.Date;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
 
 @Entity
-@Table(name = "tokens")
+@Table(name = "t_token")
 public class Token extends BaseEntity{
 
 	/**
