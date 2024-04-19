@@ -6,6 +6,9 @@ import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
+
 public class BookDTO implements Serializable{
 	/**
 	 * 
@@ -13,10 +16,13 @@ public class BookDTO implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private Integer id;
 	private String name;
+	private String author;
+	public String publisher;
 	private Double unitPrice;
 	private String image;
 	@DateTimeFormat(pattern = "MM/dd/yyyy")
-	private Date productDate;
+	@Temporal(TemporalType.DATE)
+	private Date publishingYear;
 	private Boolean available;
 	// Integer categoryId;
 	private Integer quantity;
@@ -28,6 +34,34 @@ public class BookDTO implements Serializable{
 	private List<OrderDetailDTO> orderDetails;
 	public BookDTO() {
 		// TODO Auto-generated constructor stub
+	}
+	@Override
+	public String toString() {
+		return "BookDTO [id=" + id + ", name=" + name + ", author=" + author + ", publisher=" + publisher
+				+ ", unitPrice=" + unitPrice + ", image=" + image + ", publishingYear=" + publishingYear
+				+ ", available=" + available + ", quantity=" + quantity + ", des=" + des + ", discount=" + discount
+				+ ", viewCount=" + viewCount + ", special=" + special + ", category=" + category + ", orderDetails="
+				+ orderDetails + "]";
+	}
+	public BookDTO(Integer id, String name, String author, String publisher, Double unitPrice, String image,
+			Date publishingYear, Boolean available, Integer quantity, String des, Double discount, Integer viewCount,
+			Boolean special, CategoryDTO category, List<OrderDetailDTO> orderDetails) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.author = author;
+		this.publisher = publisher;
+		this.unitPrice = unitPrice;
+		this.image = image;
+		this.publishingYear = publishingYear;
+		this.available = available;
+		this.quantity = quantity;
+		this.des = des;
+		this.discount = discount;
+		this.viewCount = viewCount;
+		this.special = special;
+		this.category = category;
+		this.orderDetails = orderDetails;
 	}
 	public Integer getId() {
 		return id;
@@ -41,6 +75,18 @@ public class BookDTO implements Serializable{
 	public void setName(String name) {
 		this.name = name;
 	}
+	public String getAuthor() {
+		return author;
+	}
+	public void setAuthor(String author) {
+		this.author = author;
+	}
+	public String getPublisher() {
+		return publisher;
+	}
+	public void setPublisher(String publisher) {
+		this.publisher = publisher;
+	}
 	public Double getUnitPrice() {
 		return unitPrice;
 	}
@@ -53,11 +99,11 @@ public class BookDTO implements Serializable{
 	public void setImage(String image) {
 		this.image = image;
 	}
-	public Date getProductDate() {
-		return productDate;
+	public Date getPublishingYear() {
+		return publishingYear;
 	}
-	public void setProductDate(Date productDate) {
-		this.productDate = productDate;
+	public void setPublishingYear(Date publishingYear) {
+		this.publishingYear = publishingYear;
 	}
 	public Boolean getAvailable() {
 		return available;
@@ -107,29 +153,5 @@ public class BookDTO implements Serializable{
 	public void setOrderDetails(List<OrderDetailDTO> orderDetails) {
 		this.orderDetails = orderDetails;
 	}
-	public BookDTO(Integer id, String name, Double unitPrice, String image, Date productDate, Boolean available,
-			Integer quantity, String des, Double discount, Integer viewCount, Boolean special, CategoryDTO category,
-			List<OrderDetailDTO> orderDetails) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.unitPrice = unitPrice;
-		this.image = image;
-		this.productDate = productDate;
-		this.available = available;
-		this.quantity = quantity;
-		this.des = des;
-		this.discount = discount;
-		this.viewCount = viewCount;
-		this.special = special;
-		this.category = category;
-		this.orderDetails = orderDetails;
-	}
-	@Override
-	public String toString() {
-		return "BookDTO [id=" + id + ", name=" + name + ", unitPrice=" + unitPrice + ", image=" + image
-				+ ", productDate=" + productDate + ", available=" + available + ", quantity=" + quantity + ", des="
-				+ des + ", discount=" + discount + ", viewCount=" + viewCount + ", special=" + special + ", category="
-				+ category + ", orderDetails=" + orderDetails + "]";
-	}
+	
 }

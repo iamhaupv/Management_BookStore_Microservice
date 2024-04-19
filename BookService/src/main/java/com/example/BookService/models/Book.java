@@ -1,12 +1,17 @@
 package com.example.BookService.models;
 
 import java.io.Serializable;
+import java.util.Date;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
 @Entity
 @Table(name="books")
@@ -22,7 +27,11 @@ public class Book implements Serializable{
 	private String name;
 	private String author;
 	public String publisher;
-	private int publishingYear;
+	@DateTimeFormat(pattern = "MM/dd/yyyy")
+	@Temporal(TemporalType.DATE)
+	private Date publishingYear;
+	private Double unitPrice;
+	private String image;
 	public Book() {
 		// TODO Auto-generated constructor stub
 	}
