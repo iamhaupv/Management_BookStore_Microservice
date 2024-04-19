@@ -33,7 +33,7 @@ public class Order implements Serializable{
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private Date orderDate;
-	private int total;
+	private Double total;
 	private Integer status;
 	private String des;
 	@OneToMany(mappedBy = "order")
@@ -42,10 +42,25 @@ public class Order implements Serializable{
 	public Order() {
 		// TODO Auto-generated constructor stub
 	}
-	public int getId() {
+	@Override
+	public String toString() {
+		return "Order [id=" + id + ", phone=" + phone + ", address=" + address + ", orderDate=" + orderDate + ", total="
+				+ total + ", status=" + status + ", des=" + des + "]";
+	}
+	public Order(Integer id, String phone, String address, Date orderDate, Double total, Integer status, String des) {
+		super();
+		this.id = id;
+		this.phone = phone;
+		this.address = address;
+		this.orderDate = orderDate;
+		this.total = total;
+		this.status = status;
+		this.des = des;
+	}
+	public Integer getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	public String getPhone() {
@@ -66,6 +81,12 @@ public class Order implements Serializable{
 	public void setOrderDate(Date orderDate) {
 		this.orderDate = orderDate;
 	}
+	public Double getTotal() {
+		return total;
+	}
+	public void setTotal(Double total) {
+		this.total = total;
+	}
 	public Integer getStatus() {
 		return status;
 	}
@@ -76,27 +97,6 @@ public class Order implements Serializable{
 		return des;
 	}
 	public void setDes(String des) {
-		this.des = des;
-	}
-	public int getTotal() {
-		return total;
-	}
-	public void setTotal(int total) {
-		this.total = total;
-	}
-	@Override
-	public String toString() {
-		return "Order [id=" + id + ", phone=" + phone + ", address=" + address + ", orderDate=" + orderDate + ", total="
-				+ total + ", status=" + status + ", des=" + des + "]";
-	}
-	public Order(int id, String phone, String address, Date orderDate, int total, Integer status, String des) {
-		super();
-		this.id = id;
-		this.phone = phone;
-		this.address = address;
-		this.orderDate = orderDate;
-		this.total = total;
-		this.status = status;
 		this.des = des;
 	}
 	

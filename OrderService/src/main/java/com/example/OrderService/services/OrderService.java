@@ -9,4 +9,5 @@ import com.example.OrderService.models.OrderDetail;
 @Service
 public interface OrderService {
 	public void create(Order order, List<OrderDetail> orderDetails);
+	public List<Order> getAllOrders();
 }
