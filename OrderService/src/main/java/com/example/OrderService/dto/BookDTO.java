@@ -1,4 +1,4 @@
-package com.example.OrderService.models;
+package com.example.OrderService.dto;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -8,7 +8,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 
-public class Book implements Serializable{
+public class BookDTO implements Serializable{
 	/**
 	 * 
 	 */
@@ -20,7 +20,7 @@ public class Book implements Serializable{
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "MM/dd/yyyy")
 	private Date publishingYear;
-	public Book() {
+	public BookDTO() {
 		// TODO Auto-generated constructor stub
 	}
 	public int getId() {
@@ -53,7 +53,7 @@ public class Book implements Serializable{
 	public void setPublishingYear(Date publishingYear) {
 		this.publishingYear = publishingYear;
 	}
-	public Book(int id, String name, String author, String publisher, Date publishingYear) {
+	public BookDTO(int id, String name, String author, String publisher, Date publishingYear) {
 		super();
 		this.id = id;
 		this.name = name;
