@@ -6,6 +6,8 @@ import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -35,6 +37,7 @@ public class Order implements Serializable{
 	private Integer status;
 	private String des;
 	@OneToMany(mappedBy = "order")
+	@JsonIgnore
 	private List<OrderDetail> orders;
 	public Order() {
 		// TODO Auto-generated constructor stub

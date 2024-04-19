@@ -2,6 +2,8 @@ package com.example.OrderService.models;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -28,6 +30,7 @@ public class OrderDetail implements Serializable{
 	private int bookId;
 	@ManyToOne
 	@JoinColumn(name = "order_id")
+	@JsonIgnore
 	private Order order;
 	public OrderDetail() {
 		// TODO Auto-generated constructor stub
