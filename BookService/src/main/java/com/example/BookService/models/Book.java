@@ -32,13 +32,15 @@ public class Book implements Serializable{
 	private Date publishingYear;
 	private Double unitPrice;
 	private String image;
+	private Boolean available;
 	public Book() {
 		// TODO Auto-generated constructor stub
 	}
 	@Override
 	public String toString() {
 		return "Book [id=" + id + ", name=" + name + ", author=" + author + ", publisher=" + publisher
-				+ ", publishingYear=" + publishingYear + "]";
+				+ ", publishingYear=" + publishingYear + ", unitPrice=" + unitPrice + ", image=" + image
+				+ ", available=" + available + "]";
 	}
 	public int getId() {
 		return id;
@@ -64,19 +66,42 @@ public class Book implements Serializable{
 	public void setPublisher(String publisher) {
 		this.publisher = publisher;
 	}
-	public int getPublishingYear() {
-		return publishingYear;
-	}
-	public void setPublishingYear(int publishingYear) {
-		this.publishingYear = publishingYear;
-	}
-	public Book(int id, String name, String author, String publisher, int publishingYear) {
+	public Book(int id, String name, String author, String publisher, Date publishingYear, Double unitPrice,
+			String image, Boolean available) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.author = author;
 		this.publisher = publisher;
 		this.publishingYear = publishingYear;
+		this.unitPrice = unitPrice;
+		this.image = image;
+		this.available = available;
 	}
+	public Date getPublishingYear() {
+		return publishingYear;
+	}
+	public void setPublishingYear(Date publishingYear) {
+		this.publishingYear = publishingYear;
+	}
+	public Double getUnitPrice() {
+		return unitPrice;
+	}
+	public void setUnitPrice(Double unitPrice) {
+		this.unitPrice = unitPrice;
+	}
+	public String getImage() {
+		return image;
+	}
+	public void setImage(String image) {
+		this.image = image;
+	}
+	public Boolean getAvailable() {
+		return available;
+	}
+	public void setAvailable(Boolean available) {
+		this.available = available;
+	}
+	
 	
 }
