@@ -1,5 +1,6 @@
 package com.example.OrderService.services;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,8 +18,9 @@ import com.example.OrderService.models.Order;
 import com.example.OrderService.models.OrderDetail;
 import com.example.OrderService.repositories.OrderDetailRepository;
 import com.example.OrderService.repositories.OrderRepository;
+
 @Service
-public class OrderServiceImpl implements OrderService{
+public class OrderServiceImpl implements OrderService {
 
 	@Autowired
 	private RestTemplate restTemplate;
@@ -26,8 +28,9 @@ public class OrderServiceImpl implements OrderService{
 	private OrderRepository orderRepository;
 	@Autowired
 	private OrderDetailRepository orderDetailRepository;
-	Logger logger=LoggerFactory.getLogger(OrderServiceApplication.class);
+	Logger logger = LoggerFactory.getLogger(OrderServiceApplication.class);
 	public Map<Integer, BookDTO> map = new HashMap<>();
+	// add book to cart call BookService api
 	public void addBookToCart(Integer id) {
 		BookDTO p = map.get(id);
 		String url = "http://localhost:8081/api/v1/book/" + id;
@@ -40,7 +43,7 @@ public class OrderServiceImpl implements OrderService{
 			p.setQuantity(p.getQuantity() + 1);
 		}
 	}
-	
+	// create oreder
 	@Override
 	public void create(Order order, List<OrderDetail> details) {
 		orderRepository.save(order);
@@ -49,10 +52,35 @@ public class OrderServiceImpl implements OrderService{
 		}
 
 	}
-
+	// get all orders
 	@Override
 	public List<Order> getAllOrders() {
 		return orderRepository.findAll();
 	}
-	
+	// get count
+	@Override
+	public int getCount() {
+		Collection<BookDTO> ps = this.getItems();
+		int count = 0;
+		for (BookDTO p : ps) {
+			count += p.getQuantity();
+		}
+		return count;
+	}
+	// get total
+	@Override
+	public double getTotal() {
+		Collection<BookDTO> ps = this.getItems();
+		double amount = 0;
+		for (BookDTO p : ps) {
+			amount += p.getQuantity() * p.getUnitPrice() * (1 - p.getDiscount());
+		}
+		return amount;
+	}
+	// items
+	@Override
+	public Collection<BookDTO> getItems() {
+		return map.values();
+	}
+
 }

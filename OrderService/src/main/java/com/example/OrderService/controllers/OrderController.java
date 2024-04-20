@@ -51,19 +51,19 @@ public class OrderController {
 //	}
 	@GetMapping("/cart/add/{id}")
 	public Object[] add(@PathVariable("id") Integer id) throws URISyntaxException, ConnectException {
-		logger.info("Đang gọi api nhé!!");
+		logger.info("Loading call api");
 		try {
-			orderService.add(id);
-			Object[] info = { orderService.getCount(), orderService.getAmount(), orderService.getItems() };
+			orderService.addBookToCart(id);
+			Object[] info = { orderService.getCount(), orderService.getTotal(), orderService.getItems() };
 			return info;
 		} catch (Exception ex) {
-			logger.info("other exception occurred. " + ex.getMessage());
+			logger.info("1" + ex.getMessage());
 			if (ex instanceof ConnectException) {
-				logger.info("throwing");
+				logger.info("2");
 				throw new ConnectException(ex.getMessage());
 			}
 			if (ex instanceof ResourceAccessException) {
-				logger.info("throwing resourceAccessException");
+				logger.info("3");
 				throw new ResourceAccessException(ex.getMessage());
 			}
 		}
