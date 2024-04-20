@@ -4,22 +4,17 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import com.example.OrderService.OrderServiceApplication;
 import com.example.OrderService.dto.BookDTO;
-
+@Service
 public class CartServiceImpl implements CartService {
 	@Autowired
 	private RestTemplate restTemplate;
-	@Autowired
-	Logger logger = LoggerFactory.getLogger(OrderServiceApplication.class);
 	public Map<Integer, BookDTO> map = new HashMap<>();
-
 	// add book to cart call BookService api
 	public void addBookToCart(Integer id) {
 		BookDTO p = map.get(id);

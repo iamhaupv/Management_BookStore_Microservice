@@ -2,8 +2,10 @@ package com.example.OrderService.services;
 
 import java.util.Collection;
 
-import com.example.OrderService.dto.BookDTO;
+import org.springframework.stereotype.Service;
 
+import com.example.OrderService.dto.BookDTO;
+@Service
 public interface CartService {
 	public void addBookToCart(Integer id);
 
