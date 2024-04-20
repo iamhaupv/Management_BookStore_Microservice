@@ -1,17 +1,13 @@
 package com.example.OrderService.controllers;
 
-import java.net.ConnectException;
-import java.net.URISyntaxException;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.ResourceAccessException;
 
 import com.example.OrderService.OrderServiceApplication;
 import com.example.OrderService.models.Order;
@@ -49,24 +45,4 @@ public class OrderController {
 //		cartService.clear();
 //		return order;
 //	}
-	@GetMapping("/cart/add/{id}")
-	public Object[] add(@PathVariable("id") Integer id) throws URISyntaxException, ConnectException {
-		logger.info("Loading call api");
-		try {
-			orderService.addBookToCart(id);
-			Object[] info = { orderService.getCount(), orderService.getTotal(), orderService.getItems() };
-			return info;
-		} catch (Exception ex) {
-			logger.info("1" + ex.getMessage());
-			if (ex instanceof ConnectException) {
-				logger.info("2");
-				throw new ConnectException(ex.getMessage());
-			}
-			if (ex instanceof ResourceAccessException) {
-				logger.info("3");
-				throw new ResourceAccessException(ex.getMessage());
-			}
-		}
-		return null;
-	}
 }
