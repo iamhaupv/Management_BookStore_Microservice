@@ -2,6 +2,7 @@ package com.example.OrderService.controllers;
 
 import java.net.ConnectException;
 import java.net.URISyntaxException;
+import java.util.Collection;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.ResourceAccessException;
 
 import com.example.OrderService.OrderServiceApplication;
+import com.example.OrderService.dto.BookDTO;
 import com.example.OrderService.services.CartService;
 @RestController
 @RequestMapping("/api/v3/")
@@ -48,6 +50,11 @@ public class CartController {
 		cartService.removeFromCart(id);
 		Object[] info = { cartService.getCount(), cartService.getTotal() };
 		return info;
+	}
+	// view cart
+	@GetMapping("/cart/view")
+	public Collection<BookDTO> view() {
+		return cartService.getItems();
 	}
 
 }

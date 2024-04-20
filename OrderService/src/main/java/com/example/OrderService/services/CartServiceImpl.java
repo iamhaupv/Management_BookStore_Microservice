@@ -62,4 +62,6 @@ public class CartServiceImpl implements CartService {
 	public void removeFromCart(Integer id) {
 		map.remove(id);
 	}
+	// view cart
+	
 }
