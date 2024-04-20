@@ -23,12 +23,12 @@ public class OrderServiceImpl implements OrderService{
 	@Autowired
 	private RestTemplate restTemplate;
 	@Autowired
-	OrderRepository orderRepository;
+	private OrderRepository orderRepository;
 	@Autowired
-	OrderDetailRepository orderDetailRepository;
+	private OrderDetailRepository orderDetailRepository;
 	Logger logger=LoggerFactory.getLogger(OrderServiceApplication.class);
-	Map<Integer, BookDTO> map = new HashMap<>();
-	public void add(Integer id) {
+	public Map<Integer, BookDTO> map = new HashMap<>();
+	public void addBookToCart(Integer id) {
 		BookDTO p = map.get(id);
 		String url = "http://localhost:8081/api/v1/book/" + id;
 		ResponseEntity<BookDTO> reponse = restTemplate.getForEntity(url, BookDTO.class);
