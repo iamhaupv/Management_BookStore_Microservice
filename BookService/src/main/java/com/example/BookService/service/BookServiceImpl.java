@@ -3,6 +3,9 @@ package com.example.BookService.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import com.example.BookService.models.Book;
@@ -15,29 +18,40 @@ import jakarta.transaction.Transactional;
 public class BookServiceImpl implements BookService {
 	@Autowired
 	private BookRepository repository;
+	private final RedisTemplate<String, List<Book>> redisTemplate;
+
+	@Autowired
+	public BookServiceImpl(RedisTemplate redisTemplate) {
+		this.redisTemplate = redisTemplate;
+	}
 
 	@Override
+	@Cacheable(value = "books")
 	public List<Book> getAllBooks() {
 		return repository.findAll();
 	}
 
 	@Override
+	@Cacheable(value = "books", key = "#id")
 	public Book getBookById(Integer id) {
 		return repository.findById(id).get();
 	}
 
 	@Override
+	@CacheEvict(value = "books", allEntries = true)
 	public Book addBook(Book book) {
 		return repository.save(book);
 	}
 
 	@Override
+	@CacheEvict(value = "books", allEntries = true)
 	public String deleteBookById(Integer id) {
 		repository.deleteById(id);
 		return "delete book successfully!";
 	}
 
 	@Override
+	@CacheEvict(value = "books", allEntries = true)
 	public Book updateBook(Integer id, Book bookNew) {
 		Book bookOld = repository.findById(id).orElse(null);
 		if (bookOld != null) {
