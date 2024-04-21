@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -33,7 +34,7 @@ public class CartController {
 
 	// add book to cart
 	@GetMapping("/cart/add/{id}")
-	@CacheEvict(value = "cart", allEntries = true)
+	@CachePut(value = "cart")
 	public String addBookToCart(@PathVariable("id") Integer id) {
 		logger.info("Loading call api order-service");
 		String url = "http://localhost:8083/api/v3/cart/add/" + id;

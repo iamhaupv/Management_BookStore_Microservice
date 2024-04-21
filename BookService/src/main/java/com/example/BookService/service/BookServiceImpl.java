@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -38,7 +39,7 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
-	@CacheEvict(value = "books", allEntries = true)
+	@CachePut(value = "books")
 	public Book addBook(Book book) {
 		return repository.save(book);
 	}
@@ -51,7 +52,7 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
-	@CacheEvict(value = "books", allEntries = true)
+	@CachePut(value = "books")
 	public Book updateBook(Integer id, Book bookNew) {
 		Book bookOld = repository.findById(id).orElse(null);
 		if (bookOld != null) {
