@@ -16,12 +16,14 @@ import org.springframework.web.client.ResourceAccessException;
 import com.example.OrderService.OrderServiceApplication;
 import com.example.OrderService.dto.BookDTO;
 import com.example.OrderService.services.CartService;
+
 @RestController
 @RequestMapping("/api/v3/")
 public class CartController {
 	Logger logger = LoggerFactory.getLogger(OrderServiceApplication.class);
 	@Autowired
 	private CartService cartService;
+
 	// add book to cart
 	@GetMapping("/cart/add/{id}")
 	public Object[] addBookToCart(@PathVariable("id") Integer id) throws URISyntaxException, ConnectException {
@@ -51,10 +53,17 @@ public class CartController {
 		Object[] info = { cartService.getCount(), cartService.getTotal() };
 		return info;
 	}
+
 	// view cart
 	@GetMapping("/cart/view")
 	public Collection<BookDTO> viewCart() {
 		return cartService.getItems();
+	}
+
+	// clear cart
+	@GetMapping("/cart/clear")
+	public void clear() {
+		cartService.clearCart();
 	}
 
 }

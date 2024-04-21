@@ -71,4 +71,12 @@ public class CartController {
 		return null;
 	}
 
+	// clear cart
+	@GetMapping("/cart/clear")
+	public String clear() {
+		String url = "http://localhost:8083/api/v3/cart/clear";
+		ResponseEntity<BookDTO> responseEntity = restTemplate.getForEntity(url, BookDTO.class);
+		return "Clear cart successfully";
+	}
+
 }
