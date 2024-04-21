@@ -15,5 +15,5 @@ public interface CartService {
 
 	public Collection<BookDTO> getItems();
 
-	public void removeFromCart(Integer id);
+	public void removeBookFromCart(Integer id);
 }

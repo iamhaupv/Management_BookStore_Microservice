@@ -12,7 +12,6 @@ import org.springframework.web.client.RestTemplate;
 
 import com.example.CartService.CartServiceApplication;
 
-
 @RestController
 @RequestMapping("/api/v4/")
 public class CartController {
@@ -20,13 +19,23 @@ public class CartController {
 	private RestTemplate restTemplate;
 	Logger logger = LoggerFactory.getLogger(CartServiceApplication.class);
 	private static final String CARTSERVICE = "CartService";
+
 	// add book to cart
 	@GetMapping("/cart/add/{id}")
 	public String addBookToCart(@PathVariable("id") Integer id) {
-		logger.info("Đang gọi api nhé");
+		logger.info("Loading call api order-service");
 		String url = "http://localhost:8083/api/v3/cart/add/" + id;
 		ResponseEntity<String> responseEntity = restTemplate.getForEntity(url, String.class);
 		return "Addd book to cart successfully!";
+	}
+
+	// remove book from cart
+	@GetMapping("/cart/remove/{id}")
+	public String removeBookFromCart(@PathVariable("id") Integer id) {
+		logger.info("Loading call api order-service");
+		String url = "http://localhost:8083/api/v3/cart/remove/" + id;
+		ResponseEntity<String> responseEntity = restTemplate.getForEntity(url, String.class);
+		return "Remove book from cart successfully!";
 	}
 
 }

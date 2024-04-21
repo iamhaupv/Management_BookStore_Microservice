@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import com.example.OrderService.models.Order;
 import com.example.OrderService.models.OrderDetail;
@@ -14,7 +13,6 @@ import com.example.OrderService.repositories.OrderRepository;
 @Service
 public class OrderServiceImpl implements OrderService {
 	@Autowired
-	private RestTemplate restTemplate;
 	private OrderRepository orderRepository;
 	@Autowired
 	private OrderDetailRepository orderDetailRepository;

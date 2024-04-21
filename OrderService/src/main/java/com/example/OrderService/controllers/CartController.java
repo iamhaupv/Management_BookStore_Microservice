@@ -22,9 +22,9 @@ public class CartController {
 	Logger logger = LoggerFactory.getLogger(OrderServiceApplication.class);
 	@Autowired
 	private CartService cartService;
-	// add to cart
+	// add book to cart
 	@GetMapping("/cart/add/{id}")
-	public Object[] add(@PathVariable("id") Integer id) throws URISyntaxException, ConnectException {
+	public Object[] addBookToCart(@PathVariable("id") Integer id) throws URISyntaxException, ConnectException {
 		logger.info("Loading call api");
 		try {
 			cartService.addBookToCart(id);
@@ -46,14 +46,14 @@ public class CartController {
 
 	// remove from cart
 	@GetMapping("/cart/remove/{id}")
-	public Object[] removeFromCart(@PathVariable("id") Integer id) {
-		cartService.removeFromCart(id);
+	public Object[] removeBookFromCart(@PathVariable("id") Integer id) {
+		cartService.removeBookFromCart(id);
 		Object[] info = { cartService.getCount(), cartService.getTotal() };
 		return info;
 	}
 	// view cart
 	@GetMapping("/cart/view")
-	public Collection<BookDTO> view() {
+	public Collection<BookDTO> viewCart() {
 		return cartService.getItems();
 	}
 

@@ -59,9 +59,8 @@ public class CartServiceImpl implements CartService {
 
 	// remove from cart
 	@Override
-	public void removeFromCart(Integer id) {
+	public void removeBookFromCart(Integer id) {
 		map.remove(id);
 	}
-	// view cart
 	
 }
