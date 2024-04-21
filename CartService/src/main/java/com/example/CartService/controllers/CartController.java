@@ -20,9 +20,9 @@ public class CartController {
 	private RestTemplate restTemplate;
 	Logger logger = LoggerFactory.getLogger(CartServiceApplication.class);
 	private static final String CARTSERVICE = "CartService";
-	
+	// add book to cart
 	@GetMapping("/cart/add/{id}")
-	public String add(@PathVariable("id") Integer id) {
+	public String addBookToCart(@PathVariable("id") Integer id) {
 		logger.info("Đang gọi api nhé");
 		String url = "http://localhost:8083/api/v3/cart/add/" + id;
 		ResponseEntity<String> responseEntity = restTemplate.getForEntity(url, String.class);
