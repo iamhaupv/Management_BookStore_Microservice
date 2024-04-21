@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,7 +28,6 @@ public class CartController {
 	private RestTemplate restTemplate;
 	Logger logger = LoggerFactory.getLogger(CartServiceApplication.class);
 	private static final String CARTSERVICE = "CartService";
-
 	// add book to cart
 	@GetMapping("/cart/add/{id}")
 	public String addBookToCart(@PathVariable("id") Integer id) {
