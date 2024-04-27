@@ -49,13 +49,15 @@ public class Book implements Serializable{
 	public Book() {
 		// TODO Auto-generated constructor stub
 	}
+	
 	@Override
 	public String toString() {
 		return "Book [id=" + id + ", name=" + name + ", author=" + author + ", publisher=" + publisher
 				+ ", publishingYear=" + publishingYear + ", unitPrice=" + unitPrice + ", image=" + image
 				+ ", available=" + available + ", quantity=" + quantity + ", des=" + des + ", discount=" + discount
-				+ "]";
+				+ ", category=" + category + "]";
 	}
+
 	public int getId() {
 		return id;
 	}
@@ -148,6 +150,23 @@ public class Book implements Serializable{
 	}
 	public void setDiscount(Double discount) {
 		this.discount = discount;
+	}
+
+	public Book(int id, String name, String author, String publisher, Date publishingYear, Double unitPrice,
+			String image, Boolean available, Integer quantity, String des, Double discount, Category category) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.author = author;
+		this.publisher = publisher;
+		this.publishingYear = publishingYear;
+		this.unitPrice = unitPrice;
+		this.image = image;
+		this.available = available;
+		this.quantity = quantity;
+		this.des = des;
+		this.discount = discount;
+		this.category = category;
 	}
 	
 	
