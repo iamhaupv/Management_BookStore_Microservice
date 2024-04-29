@@ -21,11 +21,11 @@ spring:
           uri: http://localhost:8082
           predicates:
             - Path=/api/v2/**
-#        - id: OrderService
-#          uri: http://localhost:8083
-#          predicates:
-#            - Path=/api/v3/**
-#        - id: CartService
-#          uri: http://localhost:8084
-#          predicates:
-#            - Path=/api/v4/**
+        - id: OrderService
+          uri: http://localhost:8083
+          predicates:
+            - Path=/api/v3/**
+        - id: CartService
+          uri: http://localhost:8084
+          predicates:
+            - Path=/api/v4/**
