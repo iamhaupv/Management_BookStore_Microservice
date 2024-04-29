@@ -7,6 +7,7 @@ import com.nimbusds.jose.crypto.MACSigner;
 import com.nimbusds.jose.crypto.MACVerifier;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
+import lombok.extern.slf4j.Slf4j;
 import net.minidev.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,8 +21,8 @@ import java.util.Date;
 public class JwtUtil {
 
     private static Logger logger = LoggerFactory.getLogger(JwtUtil.class);
-    private static final String USER = "PhamVanHau";
-    private static final String SECRET = "hey Mr PhamVanHau the secrect length must be at least 256 bits" +
+    private static final String USER = "tien";
+    private static final String SECRET = "hey Mr Tien the secrect length must be at least 256 bits" +
                                              " please no reveal!";
 
     public String generateToken(UserPrincipal user) {

@@ -6,16 +6,47 @@ import com.example.spring_boot_api_jwt_ad.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
+    @Override
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
+    }
+
+    @Override
+    public User addUser(User user) {
+        return userRepository.save(user);
+    }
+
+    @Override
+    public User getUerById(Long id) {
+        return userRepository.findById(id).get();
+    }
+
+    @Override
+    public User updateUser(Long id, User userNew) {
+        Optional<User> optionalUser = userRepository.findById(id);
+        if (optionalUser.isPresent()) {
+            User userOld = optionalUser.get();
+            if (userNew.getPassword() != null && !userNew.getPassword().isEmpty()) {
+                userOld.setPassword(userNew.getPassword());
+            }
+            return userRepository.save(userOld);
+        }
+        return null;
+    }
+
+
+    @Override
+    public String deleteUserById(Long id) {
+        userRepository.deleteById(id);
+        return "Delete user successfully!";
+    }
 
     @Override
     public User createUser(User user) {

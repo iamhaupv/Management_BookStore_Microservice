@@ -15,6 +15,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v2/")
 public class AuthController {
@@ -28,6 +30,28 @@ public class AuthController {
     @Autowired
     private TokenService tokenService;
 
+    // get all user
+    @GetMapping("/users")
+    public List<User> getAllUsers() {
+        return userService.getAllUsers();
+    }
+    // get user by id
+    @GetMapping("/{id}")
+    public User getUserById(@PathVariable Long id) {
+        return userService.getUerById(id);
+    }
+
+    // delete user by id
+    @DeleteMapping("/user/{id}")
+    public String deleteUserById(@PathVariable Long id) {
+        return userService.deleteUserById(id);
+    }
+
+    // update user
+    @PatchMapping("/user/{id}")
+    public User updateUser(@PathVariable Long id, @RequestBody User user) {
+        return userService.updateUser(id, user);
+    }
     @PostMapping("/register")
     public User register(@RequestBody User user){
         user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
