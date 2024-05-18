@@ -1,0 +1,43 @@
+version: '3.4'
+
+services:
+  service-book:
+    build: ./BookService
+    image: service-book
+    ports:
+      - "8081:8081"
+    environment:
+      - MYSQL_HOST=mysqldb
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=123456789
+      - MYSQL_PORT=3306
+      - MYSQL_DATABASE=BookService
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysqldb:3306/BookService?autoReconnect=true&useSSL=false
+      - SPRING_REDIS_HOST=redis
+      - SPRING_REDIS_PORT=6379
+    networks:
+      - microservice-network
+    depends_on:
+      - mysqldb
+      - redis-spring-boot
+
+  mysqldb:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456789
+      MYSQL_DATABASE: BookService
+    ports:
+      - "3307:3306"
+    networks:
+      - microservice-network
+
+  redis-spring-boot:
+    image: redis:alpine
+    ports:
+      - "6380:6379"
+    networks:
+      - microservice-network
+
+networks:
+  microservice-network:
+    driver: bridge
