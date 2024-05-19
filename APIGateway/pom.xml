@@ -67,6 +67,7 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
+		<finalName>APIGateway-0.0.1-SNAPSHOT</finalName>
 	</build>
 
 </project>

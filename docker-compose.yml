@@ -1,40 +1,57 @@
-version: '3.4'
+version: '3.8'
 
 services:
-  service-book:
-    build: ./BookService
-    image: service-book
-    ports:
-      - "8081:8081"
-    environment:
-      - MYSQL_HOST=mysqldb
-      - MYSQL_USER=root
-      - MYSQL_PASSWORD=123456789
-      - MYSQL_PORT=3306
-      - MYSQL_DATABASE=BookService
-      - SPRING_DATASOURCE_URL=jdbc:mysql://mysqldb:3306/BookService?autoReconnect=true&useSSL=false
-      - SPRING_REDIS_HOST=redis
-      - SPRING_REDIS_PORT=6379
-    networks:
-      - microservice-network
-    depends_on:
-      - mysqldb
-      - redis-spring-boot
-
-  mysqldb:
+  # MySQL service
+  mysql:
     image: mysql:latest
+    container_name: mysql
+    ports:
+      - "3307:3306"
     environment:
       MYSQL_ROOT_PASSWORD: 123456789
       MYSQL_DATABASE: BookService
+
+  # Redis service
+  redis:
+    image: redis:alpine
+    container_name: redis
     ports:
-      - "3307:3306"
+      - "6380:6379"
+
+  # Discovery service
+  discovery:
+    image: discovery-service:0.0.1
+    container_name: discovery
+    ports:
+      - "8761:8761"
     networks:
       - microservice-network
 
-  redis-spring-boot:
-    image: redis:alpine
+  # BookService
+  bookservice:
+    image: book-service:0.0.1
+    container_name: bookservice
     ports:
-      - "6380:6379"
+      - "8081:8081"
+    environment:
+      MYSQL_HOST: mysql
+      MYSQL_USER: root
+      MYSQL_PASSWORD: 123456789
+      MYSQL_PORT: 3306
+      SPRING_REDIS_HOST: redis
+      SPRING_REDIS_PORT: 6379
+    networks:
+      - microservice-network
+
+  # API Gateway
+  api-gateway:
+    image: api-gateway:0.0.1
+    container_name: api-gateway
+    ports:
+      - "8085:8085"
+    environment:
+      DISCOVERY_HOST: discovery
+      DISCOVERY_PORT: 8761
     networks:
       - microservice-network
 

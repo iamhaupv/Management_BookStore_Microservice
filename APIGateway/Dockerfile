@@ -1,5 +1,4 @@
 FROM openjdk:17
-WORKDIR /app
-COPY target/*.jar app.jar
+COPY target/APIGateway-0.0.1-SNAPSHOT.jar APIGateway-0.0.1-SNAPSHOT.jar
 EXPOSE 8085
-CMD java -jar app.jar
+ENTRYPOINT [ "java", "-jar", "APIGateway-0.0.1-SNAPSHOT.jar" ]
