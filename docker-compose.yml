@@ -1,24 +1,43 @@
 version: '3'
+
 services:
-  discovery:
-    image: discovery-service:0.0.1
-    container_name: discovery
+  mysql:
+    image: mysql:latest
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456789
+      MYSQL_DATABASE: BookService
     ports:
-      - "8761:8761"
+      - "3307:3306"
     networks:
       - microservice-network
 
-  api-gateway:
-    image: api-gateway:0.0.1
-    container_name: api-gateway
-    environment:
-      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery:8761/eureka/
+  redis:
+    image: redis:alpine
+    container_name: redis
     ports:
-      - "8085:8085"
-    depends_on:
-      - discovery
+      - "6380:6379"
     networks:
       - microservice-network
+
+  bookservice:
+    image: book-service:0.0.1
+    container_name: bookservice
+    environment:
+      MYSQL_HOST: mysql
+      MYSQL_USER: root
+      MYSQL_PASSWORD: '123456789'  
+      MYSQL_PORT: '3306'             
+      SPRING_REDIS_HOST: redis
+      SPRING_REDIS_PORT: '6379'
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/BookService?createDatabaseIfNotExist=true&autoReconnect=true&useSSL=false
+    ports:
+      - "8081:8081"
+    networks:
+      - microservice-network
+    depends_on:
+      - mysql
+      - redis
 
 networks:
   microservice-network:

@@ -1,0 +1,28 @@
+# mysql
+docker run -p 3307:3306 --name mysql -e MYSQL_ROOT_PASSWORD=123456789 -e MYSQL_DATABASE=BookService -d mysql:latest
+docker network connect microservice-network mysql
+
+# redis
+docker run -p 6380:6379 --name redis -d redis:alpine
+docker network connect microservice-network redis
+
+#discovery-service
+docker run -p 8761:8761 --name discovery -d discovery-service:0.0.1
+docker network connect microservice-network discovery
+
+# book-service
+docker run -p 8081:8081 --name bookservice --net microservice-network -e MYSQL_HOST=mysql -e MYSQL_USER=root -e MYSQL_PASSWORD=123456789 -e MYSQL_PORT=3306 -e SPRING_REDIS_HOST=redis -e SPRING_REDIS_PORT=6379 -d book-service:0.0.1
+
+# api-gateway
+docker run -p 8085:8085 --name api-gateway -d api-gateway:0.0.1
+docker network connect microservice-network api-gateway
+
+# check network
+docker network create microservice-network
+docker network inspect microservice-network
+docker network inspect
+
+# cart-service
+docker run -p 8084:8084 --name cartservice --net microservice-network -e MYSQL_HOST=mysql -e MYSQL_USER=root -e MYSQL_PASSWORD=123456789 -e MYSQL_PORT=3306 -e SPRING_REDIS_HOST=redis -e SPRING_REDIS_PORT=6379 -d cart-service:0.0.1
+
+
