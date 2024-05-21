@@ -1,7 +1,7 @@
 pipeline {
     agent any
     tools {
-        dockerTool 'docker' 
+        dockerTool 'docker.26.1.3' 
     }
     stages {
         stage('Clone Repository') {
