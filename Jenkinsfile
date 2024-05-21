@@ -1,21 +1,31 @@
 pipeline {
     agent any
 
+    tools {
+        maven 'Maven 3.9.6'
+        dockerTool 'docker'
+        jdk 'openjdk:17'
+    }
+
     stages {
         stage('Clone Repository') {
             steps {
-                // Clone mã nguồn từ GitLab
                 git credentialsId: 'microservice-network', url: 'https://gitlab.com/longsoisuaxe1a/Management_BookStore_Microservice', branch: 'main'
             }
         }
-        stage('Build Docker Image') {
+        stage('Build Services') {
             steps {
                 script {
-                    // Đặt biến môi trường Docker Image Tag
-                    def dockerImageTag = "bookservice:0.0.1"
+                    def services = ['BookService', 'APIGateway', 'CartService', 'DiscoveryService', 'OrderService', 'UserService']
 
-                    // Build Docker image từ Dockerfile trong thư mục BookService
-                    docker.build(dockerImageTag, './BookService')
+                    for (def service in services) {
+                        dir(service) {
+                            // build mvn
+                            sh 'mvn clean package -DskipTests'
+                            // Build Docker image
+                            sh "docker build -t ${service.toLowerCase()}:0.0.1 ."
+                        }
+                    }
                 }
             }
         }
