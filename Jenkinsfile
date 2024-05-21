@@ -14,10 +14,12 @@ pipeline {
                 script {
                     // Loop through each service and build
                     for (def service in env.SERVICES) {
+                        // Change directory to service
+                        sh "cd ${service}"
                         // Build service using Maven
-                        dir(service) {
-                            sh 'mvn clean package'
-                        }
+                        sh 'mvn clean package'
+                        // Change back to previous directory
+                        sh 'cd ..'
                     }
                 }
             }
