@@ -1,17 +1,13 @@
 pipeline {
     agent any
 
-    tools {
-        maven 'Maven 3.9.6'
-        dockerTool 'docker'
-    }
-
     stages {
         stage('Clone Repository') {
             steps {
                 git credentialsId: 'microservice-network-1', url: 'https://gitlab.com/longsoisuaxe1a/Management_BookStore_Microservice', branch: 'main'
             }
         }
+
         stage('Build Services') {
             steps {
                 script {
@@ -19,8 +15,6 @@ pipeline {
 
                     for (def service in services) {
                         dir(service) {
-                            // build mvn
-                            sh 'mvn clean package -DskipTests'
                             // Build Docker image
                             sh "docker build -t ${service.toLowerCase()}:0.0.1 ."
                         }
