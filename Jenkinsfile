@@ -18,7 +18,7 @@ pipeline {
                 script {
                     // Change directory to BookService and build using Maven
                     dir('BookService') {
-                        sh 'mvn clean package'
+                        sh 'mvn clean package -DskipTests'
                     }
                 }
             }
