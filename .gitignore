@@ -1,5 +1,5 @@
-/.idea
-/sql
+.idea/
+sql/
 .project
 Management_BookStore_Miroservice.iml
 rundockerfile.txt
