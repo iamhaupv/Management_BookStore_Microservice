@@ -17,7 +17,6 @@ pipeline {
                 stages {
                     stage("Build ${SERVICE}") {
                         steps {
-                            // Di chuyển vào thư mục của service và chạy lệnh Maven
                             dir("${SERVICE}") {
                                 sh 'mvn clean package'
                             }
