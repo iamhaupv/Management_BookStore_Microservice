@@ -17,7 +17,7 @@ pipeline {
                 axes {
                     axis {
                         name 'SERVICE'
-                        values 'BookService', 'APIGateway'
+                        values 'service1', 'service2', 'service3' // Thay thế bằng tên các service thực tế của bạn
                     }
                 }
                 stages {
