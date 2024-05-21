@@ -1,15 +1,9 @@
 pipeline {
     agent any
     stages {
-        stage('Clone stage') {
-            steps {
-                git credentialsId: 'microservice-network-1', url: 'https://gitlab.com/longsoisuaxe1a/Management_BookStore_Microservice'
-            }
-        }
         stage('Build') {
             steps {
-                // Sao chép mã nguồn từ kho lưu trữ GitLab
-                git credentialsId: 'your-credentials-id', url: 'https://gitlab.com/your-project'
+                git credentialsId: 'microservice-network-1', url: 'https://gitlab.com/longsoisuaxe1a/Management_BookStore_Microservice'
             }
         }
         stage('Matrix Build') {
@@ -17,7 +11,7 @@ pipeline {
                 axes {
                     axis {
                         name 'SERVICE'
-                        values 'service1', 'service2', 'service3' // Thay thế bằng tên các service thực tế của bạn
+                        values 'BookService', 'CartService'
                     }
                 }
                 stages {
