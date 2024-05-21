@@ -13,16 +13,17 @@ pipeline {
                         name 'SERVICE'
                         values 'BookService', 'APIGateway', 'CartService', 'DiscoveryService', 'OrderService', 'UserService'
                     }
-                stages {
-                    stage('Build ${SERVICE}') {
-                        steps {
-                            dir("${SERVICE}") {
-                                sh 'mvn clean package'
+                    stages {
+                        stage('Build ${SERVICE}') {
+                            steps {
+                                dir("${SERVICE}") {
+                                    sh 'mvn clean package'
+                                }
                             }
                         }
                     }
                 }
-                }
             }
         }
     }
+}
