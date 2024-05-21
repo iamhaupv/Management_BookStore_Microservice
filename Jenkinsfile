@@ -1,7 +1,7 @@
 pipeline {
     agent any
     tools {
-        dockerTool 'docker.26.1.3' 
+        docker 'docker' // Sử dụng tên công cụ Docker đã được cấu hình trong Jenkins
     }
     stages {
         stage('Clone Repository') {
