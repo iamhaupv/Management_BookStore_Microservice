@@ -1,6 +1,11 @@
 pipeline {
     agent any
 
+    tools {
+        // Use the configured Maven installation
+        maven 'Maven 3.9.6'  // Ensure this matches the name you configured in Global Tool Configuration
+    }
+
     stages {
         stage('Clone Repository') {
             steps {
