@@ -2,8 +2,7 @@ pipeline {
     agent any
 
     tools {
-        // Use the configured Maven installation
-        maven 'Maven 3.9.6'  // Ensure this matches the name you configured in Global Tool Configuration
+        maven 'Maven 3.9.6'
     }
 
     stages {
@@ -12,13 +11,17 @@ pipeline {
                 git credentialsId: 'microservice-network-1', url: 'https://gitlab.com/longsoisuaxe1a/Management_BookStore_Microservice', branch: 'main'
             }
         }
-        
-        stage('Build BookService') {
+
+        stage('Build Services') {
             steps {
                 script {
-                    // Change directory to BookService and build using Maven
-                    dir('BookService') {
-                        sh 'mvn clean package -DskipTests'
+                   
+                    def services = ['BookService', 'APIGateway', 'CartService', 'DiscoveryService', 'OrderService', 'UserService']
+
+                    for (def service in services) {
+                        dir(service) {
+                            sh 'mvn clean package -DskipTests'
+                        }
                     }
                 }
             }
