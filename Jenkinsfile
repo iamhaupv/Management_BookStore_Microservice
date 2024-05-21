@@ -20,7 +20,10 @@ pipeline {
 
                     for (def service in services) {
                         dir(service) {
+                            // build mvn
                             sh 'mvn clean package -DskipTests'
+                              // Build Docker image
+                            sh 'docker build -t ${service}:0.0.1 .'
                         }
                     }
                 }
