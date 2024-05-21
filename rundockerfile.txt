@@ -33,3 +33,7 @@ docker run -p 8084:8084 --name cartservice --net microservice-network -e MYSQL_H
 # user-service
 docker run -p 8082:8082 --name userservice --net microservice-network -e MYSQL_HOST=mysql -e MYSQL_USER=root -e MYSQL_PASSWORD=123456789 -e MYSQL_PORT=3306 -e SPRING_REDIS_HOST=redis -e SPRING_REDIS_PORT=6379 -d user-service:0.0.1
 
+# Run the Jenkins container
+docker run -d -p 8080:8080 -p 50000:50000 -v jenkins_home:/var/jenkins_home --name jenkins jenkins/jenkins:lts
+
+file of phamvanhau
