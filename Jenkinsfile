@@ -1,7 +1,7 @@
 pipeline {
     agent any
-    tools {
-        dockerTool 'docker' // Sử dụng tên công cụ Docker đã được cấu hình trong Jenkins
+    environment {
+        DOCKER_HOME = tool 'docker'
     }
     stages {
         stage('Clone Repository') {
@@ -16,7 +16,7 @@ pipeline {
                     def dockerImageTag = "bookservice:0.0.1"
                     
                     // Docker build image từ Dockerfile trong thư mục BookService
-                    docker.build(dockerImageTag, './BookService')
+                    sh "${DOCKER_HOME}/bin/docker build -t ${dockerImageTag} ./BookService"
                 }
             }
         }
