@@ -1,32 +1,28 @@
 pipeline {
-    agent any
-
-    tools {
-        maven 'Maven 3.9.6'
-        dockerTool 'docker'
-    }
-    docker {
+    agent {
+        docker {
             image 'docker:19.03.12' // Use the Docker image
             args '-v /var/run/docker.sock:/var/run/docker.sock' // Mount Docker socket
+        }
+    }
+    environment {
+        DOCKERHUB_CREDENTIALS = credentials('dockerhub') // Set your DockerHub credentials ID
     }
     stages {
-        stage('Clone Repository') {
-            steps {
-                git credentialsId: 'microservice-network', url: 'https://gitlab.com/longsoisuaxe1a/Management_BookStore_Microservice', branch: 'main'
-            }
-        }
-        stage('Build Services') {
+        stage('Build') {
             steps {
                 script {
-                    def services = ['BookService', 'APIGateway', 'CartService', 'DiscoveryService', 'OrderService', 'UserService']
-
-                    for (def service in services) {
-                        dir(service) {
-                            // build mvn
-                            sh 'mvn clean package -DskipTests'
-                            // Build Docker image
-                            sh "docker build -t ${service.toLowerCase()}:0.0.1 ."
-                        }
+                    docker.build("your-image-name:${env.BUILD_NUMBER}").inside {
+                        sh 'echo "Image built"'
+                    }
+                }
+            }
+        }
+        stage('Push') {
+            steps {
+                script {
+                    docker.withRegistry('https://index.docker.io/v1/', DOCKERHUB_CREDENTIALS) {
+                        docker.image("your-image-name:${env.BUILD_NUMBER}").push()
                     }
                 }
             }
