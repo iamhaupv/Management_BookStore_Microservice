@@ -14,7 +14,7 @@ pipeline {
             steps {
                 script {
                     // Duyệt qua từng dịch vụ và xây dựng
-                    for (def service in SERVICES) {
+                    for (def service in env.SERVICES) {
                         // Xây dựng service bằng Maven
                         dir(service) {
                             sh 'mvn clean package'
