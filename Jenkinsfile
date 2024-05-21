@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        // Danh sách các dịch vụ
+        // Define environment variables
         SERVICES = ['BookService', 'APIGateway', 'CartService', 'DiscoveryService', 'OrderService', 'UserService']
     }
     stages {
@@ -13,9 +13,9 @@ pipeline {
         stage('Build Services') {
             steps {
                 script {
-                    // Duyệt qua từng dịch vụ và xây dựng
+                    // Loop through each service and build
                     for (def service in env.SERVICES) {
-                        // Xây dựng service bằng Maven
+                        // Build service using Maven
                         dir(service) {
                             sh 'mvn clean package'
                         }
