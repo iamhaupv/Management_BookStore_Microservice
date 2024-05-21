@@ -1,27 +1,22 @@
 pipeline {
     agent any
     stages {
-        stage('Build') {
+        stage('Clone') {
             steps {
                 git credentialsId: 'microservice-network-1', url: 'https://gitlab.com/longsoisuaxe1a/Management_BookStore_Microservice'
             }
         }
-        stage('Matrix Build') {
-            matrix {
-                axes {
-                    axis {
-                        name 'SERVICE'
-                        values 'BookService', 'CartService'
-                    }
+        stage('Build BookService') {
+            steps {
+                dir("BookService") {
+                    sh 'mvn clean package'
                 }
-                stages {
-                    stage("Build ${SERVICE}") {
-                        steps {
-                            dir("${SERVICE}") {
-                                sh 'mvn clean package'
-                            }
-                        }
-                    }
+            }
+        }
+        stage('Build CartService') {
+            steps {
+                dir("CartService") {
+                    sh 'mvn clean package'
                 }
             }
         }
