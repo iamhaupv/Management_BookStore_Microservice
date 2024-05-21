@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Clone Repository') {
             steps {
-                git credentialsId: 'your-credentials-id', url: 'https://gitlab.com/longsoisuaxe1a/Management_BookStore_Microservice'
+                git credentialsId: 'microservice-network-1', url: 'https://gitlab.com/longsoisuaxe1a/Management_BookStore_Microservice'
             }
         }
         stage('Build Services') {
