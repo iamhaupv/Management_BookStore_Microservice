@@ -5,7 +5,10 @@ pipeline {
         maven 'Maven 3.9.6'
         dockerTool 'docker'
     }
-
+    docker {
+            image 'docker:19.03.12' // Use the Docker image
+            args '-v /var/run/docker.sock:/var/run/docker.sock' // Mount Docker socket
+    }
     stages {
         stage('Clone Repository') {
             steps {
