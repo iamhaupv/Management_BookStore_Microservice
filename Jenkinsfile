@@ -1,8 +1,5 @@
 pipeline {
     agent any
-    environment {
-        DOCKER_HOME = tool 'docker'
-    }
     stages {
         stage('Clone Repository') {
             steps {
@@ -16,7 +13,7 @@ pipeline {
                     def dockerImageTag = "bookservice:0.0.1"
                     
                     // Docker build image từ Dockerfile trong thư mục BookService
-                    sh "${DOCKER_HOME}/bin/docker build -t ${dockerImageTag} ./BookService"
+                    sh "docker build -t ${dockerImageTag} ./BookService"
                 }
             }
         }
