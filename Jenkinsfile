@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Clone Repository') {
             steps {
-                echo "hi"
+                echo "hi Pham Van Hau"
             }
         }
     }
