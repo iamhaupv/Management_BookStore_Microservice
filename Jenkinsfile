@@ -8,14 +8,14 @@ pipeline {
         }
         stage('Build BookService') {
             steps {
-                dir("BookService") {
+                cd("BookService") {
                     sh 'mvn clean package'
                 }
             }
         }
         stage('Build CartService') {
             steps {
-                dir("CartService") {
+                cd("CartService") {
                     sh 'mvn clean package'
                 }
             }
