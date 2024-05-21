@@ -1,11 +1,6 @@
 pipeline {
     agent any
 
-    tools {
-        maven 'Maven 3.9.6'
-        dockerTool 'docker' 
-    }
-
     stages {
         stage('Clone Repository') {
             steps {
@@ -13,16 +8,17 @@ pipeline {
             }
         }
 
-        stage('Build Services') {
+        stage('Build and Package Services') {
             steps {
                 script {
                     def services = ['BookService', 'APIGateway', 'CartService', 'DiscoveryService', 'OrderService', 'UserService']
 
                     for (def service in services) {
-                        dir(service) {
-                            // Build Docker image
-                            sh 'docker build -t ${service}:0.0.1 .'
-                        }
+                        // Đặt biến môi trường Docker Image Tag
+                        def dockerImageTag = "${service}:0.0.1"
+
+                        // Docker build image từ Dockerfile trong thư mục dự án
+                        docker.build(dockerImageTag, "./${service}")
                     }
                 }
             }
