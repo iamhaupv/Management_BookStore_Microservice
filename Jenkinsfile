@@ -14,7 +14,7 @@ pipeline {
         stage('Build Services') {
             steps {
                 script {
-                    withDockerRegistry(credentialsId: 'hau', url: 'https://index.docker.io/v1/') {
+                    withDockerRegistry(credentialsId: 'docker-hub', url: 'https://index.docker.io/v1/') {
                         dir('BookService') {
                             sh 'docker build -t bookservice:0.0.1 .'
                         }
