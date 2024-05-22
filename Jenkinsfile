@@ -9,7 +9,7 @@ pipeline {
         stage('Build BookService') {
             steps {
                 script {
-                    withDockerRegistry(credentialsId: 'hau', url: 'https://registry-1.docker.io/v2/', branch: 'main') {
+                    withDockerRegistry(credentialsId: 'hau', url: 'https://index.docker.io/v1/', branch: 'main') {
                         dir('BookService') {
                             sh 'docker build -t bookservice:0.0.1 .'
                         }
