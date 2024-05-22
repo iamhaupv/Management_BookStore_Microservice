@@ -1,9 +1,5 @@
 pipeline {
     agent any
-    environment {
-        DOCKER_CREDENTIALS_ID = 'microservice-network'
-        DOCKER_REGISTRY_URL = 'https://index.docker.io/v1/'
-    }
     stages {
         stage('Clone Repository') {
             steps {
@@ -13,9 +9,9 @@ pipeline {
         stage('Build BookService') {
             steps {
                 script {
-                    docker.withRegistry(env.DOCKER_REGISTRY_URL, env.DOCKER_CREDENTIALS_ID) {
+                    withDockerRegistry(credentialsId: 'microservice-network', url: 'https://index.docker.io/v1/') {
                         dir('BookService') {
-                            sh 'docker build -t book-service:0.0.1 .'
+                            sh 'docker build -t bookservice:0.0.1 .'
                         }
                     }
                 }
