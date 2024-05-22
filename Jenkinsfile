@@ -5,13 +5,12 @@ pipeline {
         DOCKER_CREDENTIALS_ID = 'hau'
         DOCKER_REGISTRY_URL = 'https://index.docker.io/v1/'
         DOCKER_USER = 'gitlab+deploy-token-4298232'
-        DOCKER_PASSWORD = credentials('gldt--NjU9o6fxciUJkz8e8Mp')
     }
 
     stages {
         stage('Clone Repository') {
             steps {
-                git credentialsId: 'microservice-network', url: 'https://gitlab.com/longsoisuaxe1a/Management_BookStore_Microservice', branch: 'main'
+                git credentialsId: 'hau', url: 'https://gitlab.com/longsoisuaxe1a/Management_BookStore_Microservice', branch: 'main'
             }
         }
         stage('Login to Docker') {
