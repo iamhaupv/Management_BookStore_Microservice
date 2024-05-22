@@ -1,20 +1,27 @@
 pipeline {
-    agent {
-        docker {
-            image 'your-jenkins-agent-image'
-            args '-v /var/run/docker.sock:/var/run/docker.sock'
-        }
+    agent any
+
+    tools {
+        maven 'Maven 3.9.6'
     }
+
     stages {
         stage('Clone Repository') {
             steps {
-                git credentialsId: 'microservice-network', url: 'https://gitlab.com/longsoisuaxe1a/Management_BookStore_Microservice', branch: 'main'
+                git credentialsId: 'microservice-network-1', url: 'https://gitlab.com/longsoisuaxe1a/Management_BookStore_Microservice', branch: 'main'
             }
         }
-        stage('Build and Deploy BookService') {
+        stage('Build Services') {
             steps {
                 script {
-                    echo "hello"
+                    def services = ['BookService', 'APIGateway', 'CartService', 'DiscoveryService', 'OrderService', 'UserService']
+
+                    for (def service in services) {
+                        dir(service) {
+                            // build mvn
+                            sh 'mvn clean package -DskipTests'
+                        }
+                    }
                 }
             }
         }
