@@ -14,16 +14,8 @@ pipeline {
         stage('Build Services') {
             steps {
                 withDockerRegistry(credentialsId: 'microservice-network', toolName: 'docker-latest', url: 'https://index.docker.io/v1/') {
-                    script {
-                    def services = ['BookService', 'APIGateway', 'CartService', 'DiscoveryService', 'OrderService', 'UserService']
-
-                        for (def service in services) {
-                            dir(service) {
-                                // build mvn
-                                sh 'mvn clean package -DskipTests'
-                                sh "docker build -t ${service.toLowerCase()}:0.0.1 ."
-                            }
-                        }
+                    dir('BookService') {
+                        sh 'docker build -t book-serivce:0.0.1 .'
                     }
                 }
             }
