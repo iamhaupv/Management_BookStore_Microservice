@@ -14,7 +14,7 @@ pipeline {
         stage('Build and Deploy BookService') {
             steps {
                 script {
-                    // Your Docker steps here
+                    echo "hello"
                 }
             }
         }
