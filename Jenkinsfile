@@ -4,7 +4,6 @@ pipeline {
         DOCKER_CREDENTIALS_ID = 'microservice-network'
         DOCKER_REGISTRY_URL = 'https://index.docker.io/v1/'
     }
-
     stages {
         stage('Clone Repository') {
             steps {
