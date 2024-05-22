@@ -1,23 +1,32 @@
 pipeline {
     agent any
 
-    tools {
-        maven 'Maven 3.9.6'
+    environment {
+        DOCKER_REGISTRY_URL = 'https://index.docker.io/v1/'
     }
 
     stages {
         stage('Clone Repository') {
             steps {
-                git credentialsId: 'hau', url: 'https://gitlab.com/longsoisuaxe1a/Management_BookStore_Microservice', branch: 'main'
+                git credentialsId: 'hau', url: 'https://gitlab.com/your-repository.git', branch: 'main'
             }
         }
-        stage('Build Services') {
+
+        stage('Build and Push Docker Image') {
             steps {
-                withDockerRegistry(credentialsId: 'docker-hub', url: 'https://index.docker.io/v1/') {
+                script {
+                    // Đăng nhập vào Docker Registry
+                    withDockerRegistry(credentialsId: 'docker-hub', url: env.DOCKER_REGISTRY_URL) {
+                        // Di chuyển đến thư mục chứa dự án BookService
                         dir('BookService') {
-                            sh label: '', script: 'docker build -t bookservice:0.0.1 .'
+                            // Xây dựng image Docker
+                            sh 'docker build -t your-docker-username/book-service:latest .'
+
+                            // Đẩy image Docker lên Docker Registry
+                            sh 'docker push your-docker-username/book-service:latest'
                         }
                     }
+                }
             }
         }
     }
