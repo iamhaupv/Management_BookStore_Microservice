@@ -1,15 +1,30 @@
 pipeline {
     agent any
+
     tools {
-        // Chỉ định phiên bản Docker ở đây nếu cần thiết, ví dụ: dockerTool 'docker-latest'
-        // Hoặc thiết lập môi trường Docker theo cách khác nếu không yêu cầu
-        dockerTool 'docker-latest'  // Bỏ chú thích dòng này nếu 'dockerTool' là công cụ được cấu hình hợp lệ
+        maven 'Maven 3.9.6'
+        dockerTool 'docker-latest'
     }
+
     stages {
-        stage('Build') {
+        stage('Clone Repository') {
+            steps {
+                git credentialsId: 'microservice-network', url: 'https://gitlab.com/longsoisuaxe1a/Management_BookStore_Microservice', branch: 'main'
+            }
+        }
+        stage('Build Services') {
             steps {
                 script {
-                    sh 'docker build -t bookservice .'
+                    def services = ['BookService', 'APIGateway', 'CartService', 'DiscoveryService', 'OrderService', 'UserService']
+
+                    for (def service in services) {
+                        dir(service) {
+                            // build mvn
+                            sh 'mvn clean package -DskipTests'
+                            // Build Docker image
+                            sh "docker build -t ${service.toLowerCase()}:0.0.1 ."
+                        }
+                    }
                 }
             }
         }
