@@ -1,19 +1,23 @@
 pipeline {
     agent any
+
     tools {
-        // Chỉ định phiên bản Docker ở đây nếu cần thiết
         dockerTool 'docker-latest'
     }
+
     stages {
-        stage('Checkout') {
+        stage('Clone Repository') {
             steps {
-                checkout([$class: 'GitSCM', branches: [[name: '*/main']], userRemoteConfigs: [[url: 'https://gitlab.com/longsoisuaxe1a/Management_BookStore_Microservice']]])
+                git credentialsId: 'microservice-network', url: 'https://gitlab.com/longsoisuaxe1a/Management_BookStore_Microservice', branch: 'main'
             }
         }
-        stage('Build') {
+        stage('Build BookService Docker Image') {
             steps {
                 script {
-                    sh 'docker build -t bookservice -f BookService/Dockerfile BookService'
+                    dir('BookService') {
+                        // Build Docker image for BookService
+                        sh 'docker build -t bookservice:0.0.1 .'
+                    }
                 }
             }
         }
