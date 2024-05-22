@@ -1,6 +1,10 @@
 pipeline {
-    agent any
-
+    agent {
+        docker {
+            image 'your-jenkins-agent-image'
+            args '-v /var/run/docker.sock:/var/run/docker.sock'
+        }
+    }
     stages {
         stage('Clone Repository') {
             steps {
@@ -10,12 +14,7 @@ pipeline {
         stage('Build and Deploy BookService') {
             steps {
                 script {
-                    // Pull the Jenkins image
-                    docker.image('jenkins/jenkins:latest').pull()
-                    // Build Docker image for BookService
-                    docker.build('bookservice:0.0.1', './BookService')
-                    // Run Docker container
-                    docker.image('bookservice:0.0.1').run('-p 8080:8080')
+                    // Your Docker steps here
                 }
             }
         }
