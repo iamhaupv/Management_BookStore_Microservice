@@ -1,30 +1,19 @@
 pipeline {
     agent any
-
     tools {
-        maven 'Maven 3.9.6'
+        // Chỉ định phiên bản Docker ở đây nếu cần thiết
         dockerTool 'docker-latest'
     }
-
     stages {
-        stage('Clone Repository') {
+        stage('Checkout') {
             steps {
-                git credentialsId: 'microservice-network', url: 'https://gitlab.com/longsoisuaxe1a/Management_BookStore_Microservice', branch: 'main'
+                checkout([$class: 'GitSCM', branches: [[name: '*/main']], userRemoteConfigs: [[url: 'https://gitlab.com/longsoisuaxe1a/Management_BookStore_Microservice']]])
             }
         }
-        stage('Build Services') {
+        stage('Build') {
             steps {
                 script {
-                    def services = ['BookService', 'APIGateway', 'CartService', 'DiscoveryService', 'OrderService', 'UserService']
-
-                    for (def service in services) {
-                        dir(service) {
-                            // build mvn
-                            sh 'mvn clean package -DskipTests'
-                            // Build Docker image
-                            sh "docker build -t ${service.toLowerCase()}:0.0.1 ."
-                        }
-                    }
+                    sh 'docker build -t bookservice -f BookService/Dockerfile BookService'
                 }
             }
         }
