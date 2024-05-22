@@ -1,10 +1,5 @@
 pipeline {
     agent any
-
-    tools {
-        maven 'Maven 3.9.6'
-    }
-
     environment {
         DOCKER_CREDENTIALS_ID = 'microservice-network'
         DOCKER_REGISTRY_URL = 'https://index.docker.io/v1/'
