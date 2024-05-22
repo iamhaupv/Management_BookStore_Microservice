@@ -15,15 +15,8 @@ pipeline {
             steps {
                 script {
                     withDockerRegistry(credentialsId: 'hau', url: 'https://index.docker.io/v1/') {
-                        def services = ['BookService', 'APIGateway', 'CartService', 'DiscoveryService', 'OrderService', 'UserService']
-
-                        for (def service in services) {
-                            dir(service) {
-                                // build mvn
-                                sh 'mvn clean package -DskipTests'
-                                // Build Docker image
-                                sh "docker build -t ${service.toLowerCase()}:0.0.1 ."
-                            }
+                        dir('BookService') {
+                            sh 'docker build -t bookservice:0.0.1 .'
                         }
                     }
                 }
