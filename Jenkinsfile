@@ -13,7 +13,7 @@ pipeline {
         }
         stage('Build Services') {
             steps {
-                withDockerRegistry(credentialsId: 'microservice-network', toolName: 'docker-latest', url: 'https://index.docker.io/v1/') {
+                withDockerRegistry(credentialsId: 'microservice-network', url: 'https://index.docker.io/v1/') {
                     dir('BookService') {
                         sh 'docker build -t book-serivce:0.0.1 .'
                     }
