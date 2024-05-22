@@ -15,7 +15,6 @@ pipeline {
             steps {
                 script {
                     dir('BookService') {
-                        // Build Docker image for BookService
                         sh 'docker build -t bookservice:0.0.1 .'
                     }
                 }
