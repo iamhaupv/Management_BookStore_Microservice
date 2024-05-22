@@ -13,10 +13,11 @@ pipeline {
         }
         stage('Build Services') {
             steps {
-                // This step should not normally be used in your script. Consult the inline help for details.
-                withDockerRegistry(credentialsId: 'microservice-network', url: 'https://index.docker.io/v1/') {
-                    dir('BookService') {
-                        sh 'docker build -t book-serivce:0.0.1 .'
+                script {
+                    withDockerRegistry(credentialsId: 'microservice-network', url: 'https://index.docker.io/v1/') {
+                        dir('BookService') {
+                            sh 'docker build -t book-serivce:0.0.1 .'
+                        }
                     }
                 }
             }
