@@ -1,24 +1,11 @@
 pipeline {
     agent any
-
-    environment {
-        DOCKER_REGISTRY_URL = 'https://index.docker.io/v1/'
-    }
-
     stages {
         stage('Build and Push Docker Image') {
             steps {
-                script {
-                    // Đăng nhập vào Docker Registry
-                    withDockerRegistry(credentialsId: 'docker-hub', url: env.DOCKER_REGISTRY_URL) {
-                        // Di chuyển đến thư mục chứa dự án BookService
-                        dir('BookService') {
-                            // Xây dựng image Docker
-                            sh 'docker build -t your-docker-username/book-service:latest .'
-
-                            // Đẩy image Docker lên Docker Registry
-                            sh 'docker push your-docker-username/book-service:latest'
-                        }
+                withDockerRegistry(credentialsId: 'docker-hub', url: 'https://index.docker.io/v1/') {
+                    dir('BookService') {
+                        sh 'docker build -t book-service:0.0.1 .'
                     }
                 }
             }
