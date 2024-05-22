@@ -3,6 +3,7 @@ pipeline {
 
     tools {
         maven 'Maven 3.9.6'
+        dockerTools 'docker-latest'
     }
 
     stages {
@@ -20,6 +21,7 @@ pipeline {
                         dir(service) {
                             // build mvn
                             sh 'mvn clean package -DskipTests'
+                            sh "docker build -t ${service.toLowerCase()}:0.0.1 ."
                         }
                     }
                 }
