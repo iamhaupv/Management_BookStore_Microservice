@@ -11,3 +11,5 @@
 <img src="https://i.imgur.com/94m5cO9.png">
 <h4>Jenkins build maven file, build docker file, push image docker hub</h4>
 <img src="https://i.imgur.com/RMis8iR.png">
+<h4>Jenkins auto push image docker hub khi có thay đổi code trên gitlab</h4>
+<img src="https://i.imgur.com/6tAMeoz.png">
