@@ -15,32 +15,32 @@ pipeline {
                     dir('BookService') {
                         sh 'mvn clean package -DskipTests'
                         sh 'docker build -t book-service:0.0.1 .'
-                        sh 'docker push book-service:0.0.1'
+                        sh 'docker push bourbon692/book-service:0.0.1'
                     }
                     dir('APIGateway') {
                         sh 'mvn clean package -DskipTests'
                         sh 'docker build -t api-gateway-service:0.0.1 .'
-                        sh 'docker push api-gateway-service:0.0.1'
+                        sh 'docker push bourbon692/api-gateway-service:0.0.1'
                     }
                     dir('CartService') {
                         sh 'mvn clean package -DskipTests'
                         sh 'docker build -t cart-service:0.0.1 .'
-                        sh 'docker push cart-service:0.0.1'
+                        sh 'docker push bourbon692/cart-service:0.0.1'
                     }
                     dir('DiscoveryService') {
                         sh 'mvn clean package -DskipTests'
                         sh 'docker build -t discovery-service:0.0.1 .'
-                        sh 'docker push discovery-service:0.0.1'
+                        sh 'docker push bourbon692/discovery-service:0.0.1'
                     }
                     dir('OrderService') {
                         sh 'mvn clean package -DskipTests'
                         sh 'docker build -t order-service:0.0.1 .'
-                        sh 'docker order-service:0.0.1'
+                        sh 'docker bourbon692/order-service:0.0.1'
                     }
                     dir('UserService') {
                         sh 'mvn clean package -DskipTests'
                         sh 'docker build -t user-service:0.0.1 .'
-                        sh 'docker push user-service:0.0.1'
+                        sh 'docker push bourbon692/user-service:0.0.1'
                     }
                 }
             }
