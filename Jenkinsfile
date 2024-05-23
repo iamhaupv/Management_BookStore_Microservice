@@ -35,7 +35,7 @@ pipeline {
                     dir('OrderService') {
                         sh 'mvn clean package -DskipTests'
                         sh 'docker build -t bourbon692/order-service:0.0.1 .'
-                        sh 'docker bourbon692/order-service:0.0.1'
+                        sh 'docker push bourbon692/order-service:0.0.1'
                     }
                     dir('UserService') {
                         sh 'mvn clean package -DskipTests'
