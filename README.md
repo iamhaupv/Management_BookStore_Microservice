@@ -13,3 +13,5 @@
 <img src="https://i.imgur.com/RMis8iR.png">
 <h4>Jenkins auto push image docker hub khi có thay đổi code trên gitlab</h4>
 <img src="https://i.imgur.com/6tAMeoz.png">
+<h4>Add webhook cho gitlab khi có thay đổi code thì nó tự động clone code cho mình</h4>
+<img src="https://i.imgur.com/FK6z7c9.png">
