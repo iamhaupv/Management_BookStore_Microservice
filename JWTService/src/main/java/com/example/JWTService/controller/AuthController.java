@@ -58,6 +58,10 @@ public class AuthController {
 //		String role=(String) session.getAttribute("role");
 //		return role;
 //	}
+	@PostMapping("/a")
+	public String a () {
+		return "a";
+	}
 	@PostMapping("/signin")
 	public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest, HttpSession session) {
 
