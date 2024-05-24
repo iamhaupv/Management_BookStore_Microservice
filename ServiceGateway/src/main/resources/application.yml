@@ -12,16 +12,16 @@ spring:
               - PUT
               - DELETE
       routes:
-        - id: JWTService
+        - id: cms-authenjwt
           uri: http://localhost:8080
           predicates:
             - Path=/api/auth/**
-        - id: BookService
-          uri: http://localhost:8081
+        - id: service-product
+          uri: http://localhost:8802
           predicates:
             - Path=/api/v1/**
-        - id: UserService
-          uri: http://localhost:8082
+        - id: service-user
+          uri: http://localhost:8801
           predicates:
             - Path=/api/v2/**
       

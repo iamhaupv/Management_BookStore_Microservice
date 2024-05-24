@@ -13,8 +13,8 @@ import jakarta.persistence.Table;
 public class User implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	int id;
-	String fullName;
+	private int id;
+	private String fullName;
 
 	public int getId() {
 		return id;
