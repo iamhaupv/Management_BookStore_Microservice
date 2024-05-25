@@ -10,9 +10,7 @@ import org.springframework.stereotype.Component;
 public class RouteValidator {
 	public static final List<String> listApiAuthen=List.of(
 			"/api/auth/signin",
-			"/api/auth/signup",
-			"/api/v1/books",
-			"/api/v2/user"
+			"/api/auth/signup"
 			);
 	public Predicate<ServerHttpRequest> isSecured= 
 			request-> listApiAuthen

@@ -1,63 +1,56 @@
 package com.example.APIGateway.util;
-
-import java.security.Key;
+import com.nimbusds.jose.*;
+import com.nimbusds.jose.crypto.MACVerifier;
+import com.nimbusds.jwt.JWTClaimsSet;
+import com.nimbusds.jwt.SignedJWT;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.MalformedJwtException;
-import io.jsonwebtoken.UnsupportedJwtException;
-import io.jsonwebtoken.io.Decoders;
-import io.jsonwebtoken.security.Keys;
+import javax.security.sasl.AuthenticationException;
+import java.text.ParseException;
+import java.util.Date;
 
 @Component
 public class JwtUtil {
-	private static final Logger logger = LoggerFactory.getLogger(JwtUtil.class);
+    private static Logger logger = LoggerFactory.getLogger(JwtUtil.class);
+    private static final String SECRET = "hey Mr Tien the secrect length must be at least 256 bits" +
+            " please no reveal!";
 
-	@Value("${bezkoder.app.jwtSecret}")
-	private String jwtSecret;
+    //--------------------getExpirationDateFromToken-------------------------
+    private Date getExpirationDateFromToken(JWTClaimsSet claims) {
+        return claims != null ? claims.getExpirationTime() : new Date();
+    }
 
-	@Value("${bezkoder.app.jwtExpirationMs}")
-	private int jwtExpirationMs;
+    //--------------------isTokenExpired-------------------------
+    private boolean isTokenExpired(JWTClaimsSet claims) {
+        return getExpirationDateFromToken(claims).after(new Date());
+    }
 
-//  public String generateJwtToken(Authentication authentication) {
-//
-//    UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
-//
-//    return Jwts.builder()
-//        .setSubject((userPrincipal.getUsername()))
-//        .setIssuedAt(new Date())
-//        .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
-//        .signWith(key(), SignatureAlgorithm.HS256)
-//        .compact();
-//  }
+    public void validateToken(String token) throws Exception {
+        try {
+            // Parse token and get the claims
+            SignedJWT signedJWT = SignedJWT.parse(token);
+            JWTClaimsSet claims = signedJWT.getJWTClaimsSet();
 
-	private Key key() {
-		return Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtSecret));
-	}
+            // Verify the token signature
+            JWSVerifier verifier = new MACVerifier(SECRET.getBytes());
+            if (!signedJWT.verify(verifier)) {
+                //
+                System.out.println("Signature verification failed");
+            }
+            // Check if token has expired
+            if (isTokenExpired(claims)) {
 
-	public String getUserNameFromJwtToken(String token) {
-		return Jwts.parserBuilder().setSigningKey(key()).build().parseClaimsJws(token).getBody().getSubject();
-	}
+                System.out.println("Token has expired");
+            }
+            //
+            System.out.println("Token is valid");
+        } catch (ParseException | JOSEException e) {
+            logger.error("Error validating token: {}", e.getMessage());
+            throw new AuthenticationException("Error validating token") {};
+        }
+    }
 
-	public boolean validateJwtToken(String authToken) {
-		try {
-			Jwts.parserBuilder().setSigningKey(key()).build().parse(authToken);
-			return true;
-		} catch (MalformedJwtException e) {
-			logger.error("Invalid JWT token: {}", e.getMessage());
-		} catch (ExpiredJwtException e) {
-			logger.error("JWT token is expired: {}", e.getMessage());
-		} catch (UnsupportedJwtException e) {
-			logger.error("JWT token is unsupported: {}", e.getMessage());
-		} catch (IllegalArgumentException e) {
-			logger.error("JWT claims string is empty: {}", e.getMessage());
-		}
-
-		return false;
-	}
 }
