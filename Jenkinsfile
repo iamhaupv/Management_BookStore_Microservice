@@ -42,6 +42,11 @@ pipeline {
                         sh 'docker build -t bourbon692/user-service:0.0.1 .'
                         sh 'docker push bourbon692/user-service:0.0.1'
                     }
+                    dir('JWTService') {
+                        sh 'mvn clean package -DskipTests'
+                        sh 'docker build -t bourbon692/jwt-service:0.0.1 .'
+                        sh 'docker push bourbon692/jwt-service:0.0.1'
+                    }
                 }
             }
         }

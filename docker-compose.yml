@@ -1,16 +1,56 @@
 version: "3.8"
 
 services:
-  mysql:
+  mysql-book:
     image: mysql:latest
-    container_name: mysql
+    container_name: mysql-book
     environment:
       MYSQL_ROOT_PASSWORD: 123456789
+      MYSQL_DATABASE: BookService
     ports:
       - "3307:3306"
     networks:
       - microservice-network
-
+  mysql-user:
+    image: mysql:latest
+    container_name: mysql-user
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456789
+      MYSQL_DATABASE: UserSerVice
+    ports:
+      - "3308:3306"
+    networks:
+      - microservice-network
+  mysql-order:
+    image: mysql:latest
+    container_name: mysql-order
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456789
+      MYSQL_DATABASE: OrderService
+    ports:
+      - "3309:3306"
+    networks:
+      - microservice-network
+  mysql-cart:
+    image: mysql:latest
+    container_name: mysql-cart
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456789
+      MYSQL_DATABASE: CartService
+    ports:
+      - "3300:3306"
+    networks:
+      - microservice-network
+  mysql-jwt:
+    image: mysql:latest
+    container_name: mysql-jwt
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456789
+      MYSQL_DATABASE: JWTService
+    ports:
+      - "3301:3306"
+    networks:
+      - microservice-network
   redis:
     image: redis:alpine
     container_name: redis
@@ -24,9 +64,6 @@ services:
     container_name: discovery
     ports:
       - "8761:8761"
-    depends_on:
-      - mysql
-      - redis
     networks:
       - microservice-network
 
@@ -36,15 +73,14 @@ services:
     ports:
       - "8080:8080"
     environment:
-      MYSQL_HOST: mysql
+      MYSQL_HOST: mysql-jwt
       MYSQL_USER: root
       MYSQL_PASSWORD: 123456789
-      MYSQL_DATABASE: JWTService
       MYSQL_PORT: 3306
       SPRING_REDIS_HOST: redis
       SPRING_REDIS_PORT: 6379
     depends_on:
-      - mysql
+      - mysql-jwt
       - redis
     networks:
       - microservice-network
@@ -55,15 +91,14 @@ services:
     ports:
       - "8081:8081"
     environment:
-      MYSQL_HOST: mysql
+      MYSQL_HOST: mysql-book
       MYSQL_USER: root
       MYSQL_PASSWORD: 123456789
-      MYSQL_DATABASE: BookService
       MYSQL_PORT: 3306
       SPRING_REDIS_HOST: redis
       SPRING_REDIS_PORT: 6379
     depends_on:
-      - mysql
+      - mysql-book
       - redis
     networks:
       - microservice-network
@@ -84,15 +119,14 @@ services:
     ports:
       - "8083:8083"
     environment:
-      MYSQL_HOST: mysql
+      MYSQL_HOST: mysql-order
       MYSQL_USER: root
       MYSQL_PASSWORD: 123456789
-      MYSQL_DATABASE: OrderService
       MYSQL_PORT: 3306
       SPRING_REDIS_HOST: redis
       SPRING_REDIS_PORT: 6379
     depends_on:
-      - mysql
+      - mysql-order
       - redis
     networks:
       - microservice-network
@@ -103,15 +137,14 @@ services:
     ports:
       - "8084:8084"
     environment:
-      MYSQL_HOST: mysql
+      MYSQL_HOST: mysql-cart
       MYSQL_USER: root
       MYSQL_PASSWORD: 123456789
-      MYSQL_DATABASE: CartService
       MYSQL_PORT: 3306
       SPRING_REDIS_HOST: redis
       SPRING_REDIS_PORT: 6379
     depends_on:
-      - mysql
+      - mysql-cart
       - redis
     networks:
       - microservice-network
@@ -122,15 +155,14 @@ services:
     ports:
       - "8082:8082"
     environment:
-      MYSQL_HOST: mysql
+      MYSQL_HOST: mysql-user
       MYSQL_USER: root
       MYSQL_PASSWORD: 123456789
-      MYSQL_DATABASE: UserService
       MYSQL_PORT: 3306
       SPRING_REDIS_HOST: redis
       SPRING_REDIS_PORT: 6379
     depends_on:
-      - mysql
+      - mysql-user
       - redis
     networks:
       - microservice-network

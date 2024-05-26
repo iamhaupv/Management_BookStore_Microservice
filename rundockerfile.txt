@@ -1,5 +1,9 @@
 # mysql
-docker run -p 3307:3306 --name mysql -e MYSQL_ROOT_PASSWORD=123456789 -e MYSQL_DATABASE=BookService -d mysql:latest
+docker run -p 3307:3306 --name mysql-book -e MYSQL_ROOT_PASSWORD=123456789 -e MYSQL_DATABASE=BookService -d mysql:latest
+docker run -p 3307:3306 --name mysql-cart -e MYSQL_ROOT_PASSWORD=123456789 -e MYSQL_DATABASE=CartService -d mysql:latest
+docker run -p 3307:3306 --name mysql-user -e MYSQL_ROOT_PASSWORD=123456789 -e MYSQL_DATABASE=UserService -d mysql:latest
+docker run -p 3307:3306 --name mysql-order -e MYSQL_ROOT_PASSWORD=123456789 -e MYSQL_DATABASE=OrderService -d mysql:latest
+docker run -p 3307:3306 --name mysql-jwt -e MYSQL_ROOT_PASSWORD=123456789 -e MYSQL_DATABASE=JWTService -d mysql:latest
 docker network connect microservice-network mysql
 
 # redis
