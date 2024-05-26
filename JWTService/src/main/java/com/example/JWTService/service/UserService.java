@@ -6,4 +6,5 @@ import com.example.JWTService.entity.User;
 public interface UserService {
     User createUser(User user);
     UserPrincipal findByUsername(String username);
+    boolean usernameExists(String username);
 }

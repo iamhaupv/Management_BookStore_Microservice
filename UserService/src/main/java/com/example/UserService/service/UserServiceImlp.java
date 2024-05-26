@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import com.example.UserService.entity.User;
 import com.example.UserService.repositories.UserRepository;
 
-
 @Service
 public class UserServiceImlp implements UserService {
 	@Autowired
@@ -17,14 +16,13 @@ public class UserServiceImlp implements UserService {
 
 	@Override
 	public List<User> findAllUser() {
-		List<User> users=new ArrayList<>();
-		users=userReponsive.findAll();
+		List<User> users = new ArrayList<>();
+		users = userReponsive.findAll();
 		return users;
 	}
 
 	@Override
 	public void addUser(User user) {
-		// TODO Auto-generated method stub
 		userReponsive.save(user);
 	}
 }

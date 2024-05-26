@@ -31,7 +31,7 @@ import jakarta.servlet.http.HttpServletRequest;
 @RestController
 @RequestMapping("/api/v2")
 public class UserController {
-	Logger logger=LoggerFactory.getLogger(UserServiceApplication.class);
+	Logger logger = LoggerFactory.getLogger(UserServiceApplication.class);
 	@Autowired
 	UserService userService;
 	@Autowired
@@ -49,23 +49,21 @@ public class UserController {
 		} else {
 			listUser = userRedisReponse.findAll();
 		}
-
+		System.out.println(listUser);
 		return listUser;
 	}
-
-	// Thêm người dùng vào nhé
+	
 	@PostMapping("/user")
-	@RateLimiter(name = "findAllUser")
-	public User addUser(@RequestBody User user) {
+	@RateLimiter(name = "addUser")
+	public ResponseEntity<?> addUser(@RequestBody User user) {
 		userService.addUser(user);
-		userRedisReponse.saveUser(user);
-		return user;
+		return ResponseEntity.ok(user);
 	}
 
 	// Tim thong tin theo id
 	@GetMapping("/user/{id}")
-	@RateLimiter(name = "findAllUser")
-	public User findByIdUser(@PathVariable Integer id) {
+	@RateLimiter(name = "findUserById")
+	public User findByIdUser(@PathVariable String id) {
 		Optional<User> optional = userReponsive.findById(id);
 		User user = null;
 		if (optional.isPresent()) {
@@ -84,10 +82,18 @@ public class UserController {
 		return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS).headers(responseHeaders) // send retry header
 				.body("Too Many Requests - Retry After 1 Minute");
 	}
+
+//	@ExceptionHandler(RequestNotPermitted.class)
+//	public ResponseEntity<Object> handleRequestNotPermitted(RequestNotPermitted ex, HttpServletRequest request) {
+//		logger.warn("Số request bị giới hạn", request.getRequestURI(), ex.getMessage());
+//		return new ResponseEntity<>("Vui lòng gửi request lại sau 1 phút", HttpStatus.TOO_MANY_REQUESTS);
+//	}
 	@ExceptionHandler(RequestNotPermitted.class)
-	   public ResponseEntity<Object> handleRequestNotPermitted(RequestNotPermitted ex, HttpServletRequest request) {
-	      logger.warn("Số request bị giới hạn",
-	         request.getRequestURI(), ex.getMessage());
-	      return new ResponseEntity<>("Vui lòng gửi request lại sau 1 phút", HttpStatus.TOO_MANY_REQUESTS);
-	   }
+    public ResponseEntity<Object> handleRequestNotPermitted(RequestNotPermitted ex) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Retry-After", "60s"); // Thông báo thời gian chờ sau khi vượt quá giới hạn
+        return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS)
+                             .headers(headers)
+                             .body("Vượt quá số lượng yêu cầu cho phép, vui lòng thử lại sau."); // Thông báo lỗi
+    }
 }

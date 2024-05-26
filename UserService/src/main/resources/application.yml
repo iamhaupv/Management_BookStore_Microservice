@@ -1,0 +1,4 @@
+resilience4j.ratelimiter.configs:
+  findAllUser:
+    limitForPeriod: 10
+    limitRefreshPeriod: 1m

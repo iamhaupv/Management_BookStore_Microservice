@@ -19,7 +19,7 @@ public class UserRedisRepository {
 	}
 
 	public void saveUser(User user) {
-		hashOperations.put("USER", user.getId(), user);
+		hashOperations.put("USER", user.getUsername(), user);
 	}
 
 	public List<User> findAll() {

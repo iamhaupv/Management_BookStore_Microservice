@@ -47,5 +47,8 @@ public class UserServiceImpl implements UserService {
         return userPrincipal;
 
     }
-
+    @Override
+    public boolean usernameExists(String username) {
+        return userRepository.findByUsername(username) != null;
+    }
 }
