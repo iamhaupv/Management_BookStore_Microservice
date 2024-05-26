@@ -1,6 +1,6 @@
 <h4 style="text-align: center">Mô hình Microservice BookStore</h4>
 <img src="https://i.imgur.com/9h0eAki.jpeg">
-<img src = "https://i.imgur.com/GMpYefS.jpeg"/>
+<img src = "https://i.imgur.com/n8ji9Fe.jpeg"/>
 <br/>
 <h4>Call-api-service</h4>
 <img src="https://i.imgur.com/nwvAr0q.jpeg">
